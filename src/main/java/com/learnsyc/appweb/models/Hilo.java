@@ -19,12 +19,12 @@ public class Hilo {
     @Column(name="mensaje")
     String mensaje;
     @Column(name="cerrado")
-    boolean cerrado;
+    boolean cerrado; //Me parece que ya no va
     @Column(name="fecha_creacion")
-    final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime@Lob
+    final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
     @Lob
     @Column(name = "archivo")
-    byte[] archivo;
+    byte[] archivo; //Si no es criterio de aceptacion se va
 
     @JoinColumns({
             @JoinColumn(name="id_topico", referencedColumnName="id_topico")
@@ -41,7 +41,7 @@ public class Hilo {
         this.idHilo = idHilo;
         this.titulo = titulo;
         this.mensaje = mensaje;
-        cerrado = false;
+        cerrado = false; //Posiblemente se va
         this.topico = topico;
         this.usuario = usuario;
         this.archivo = archivo;

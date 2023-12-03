@@ -34,24 +34,6 @@ public class TopicoService {
         return topicoRepository.save(topico);
     }
 
-    public Topico guardarCambios(Topico topico){
-        return topicoRepository.saveAndFlush(topico);
-    }
-
-    public Topico eliminarTopico(EliminarTopicoRequest request){
-        Topico topico = buscarTopico(request.getEliminarTopico());
-        topicoRepository.deleteById(topico.getIdTopico());
-        return topico;
-    }
-
-    public TopicoSerializer editarTopico(EditarTopicoRequest request){
-        Topico topico = buscarTopico(request.getCambiarTopico());
-        topico.setNombre(request.getNombre());
-        topico.setDescripcion(request.getDescripcion());
-        guardarCambios(topico);
-        return retornarTopico(topico);
-    }
-
     public Topico buscarTopico(String nombre){ //Devuelve lo que se mostrara en la página
         if(!topicoRepository.existsTopicoByNombre(nombre)) {
             throw new ResourceNotExistsException("El tópico " + nombre + " no existe");
@@ -67,4 +49,6 @@ public class TopicoService {
     public Topico encontrarTopico(Long request) {
         return topicoRepository.findByIdTopico(request);
     }
+
+    //Se tiene que decidir quedarse con encontrarTopico o buscarTopico (Probablemente buscarTopico se quede
 }

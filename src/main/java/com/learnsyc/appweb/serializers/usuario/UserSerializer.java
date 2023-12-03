@@ -8,5 +8,4 @@ import lombok.Data;
 public class UserSerializer {
     String user;
     String email;
-    int nroPuntos;
 }

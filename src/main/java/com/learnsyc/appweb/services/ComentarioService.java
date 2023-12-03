@@ -41,9 +41,9 @@ public class ComentarioService {
         return comentarioRepository.findByIdComentario(id);
     }
 
-    public Comentario guardarCambios(Comentario comentario){return comentarioRepository.saveAndFlush(comentario);}
+    private void guardarCambios(Comentario comentario){comentarioRepository.saveAndFlush(comentario);}
 
-    public Comentario eliminarComentario(DeleteComentarioRequest request){
+    public Comentario eliminarComentario(DeleteComentarioRequest request){ //En duda si se eliminara este metodo
         Comentario comentario = encontrarComentario(request.getId());
         comentarioRepository.deleteById(comentario.getIdComentario());
         return comentario;
@@ -59,6 +59,6 @@ public class ComentarioService {
 
     public ComentarioSerializer retornarComentario(Comentario comentario){
         return new ComentarioSerializer(comentario.getIdComentario(), comentario.getMensaje(), comentario.isEsEditado(), comentario.getFechaCreacion(), hiloService.retornarHilo(comentario.getHilo()),
-                new UserSerializer(comentario.getUsuario().getUser(), comentario.getUsuario().getEmail(), comentario.getUsuario().getNroPuntos()));
+                new UserSerializer(comentario.getUsuario().getUser(), comentario.getUsuario().getEmail()));
     }
 }

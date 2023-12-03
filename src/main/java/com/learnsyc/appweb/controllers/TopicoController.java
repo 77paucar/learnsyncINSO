@@ -3,7 +3,6 @@ package com.learnsyc.appweb.controllers;
 import java.util.List;
 
 import com.learnsyc.appweb.models.Categoria;
-import com.learnsyc.appweb.serializers.categoria.DeleteCategoriaRequest;
 import com.learnsyc.appweb.serializers.topico.*;
 import com.learnsyc.appweb.services.CategoriaService;
 import jakarta.validation.Valid;

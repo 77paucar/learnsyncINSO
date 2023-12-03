@@ -14,7 +14,6 @@ public class HiloSerializer {
     Long id;
     String titulo;
     String mensaje;
-    boolean cerrado;
     LocalDate fechaCreacion; //Cambiar a LocalDateTime
     TopicoSerializer topico;
     UserSerializer usuario;

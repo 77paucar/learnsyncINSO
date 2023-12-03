@@ -49,29 +49,9 @@ public class UserService {
         }
         return userRepository.findByEmail(email);
     }
-    public Usuario guardarCambios(Usuario usuario){return userRepository.saveAndFlush(usuario);}
-
-    public Usuario suspenderUsuario(SuspendedUserRequest request){
-        Usuario usuario = encontrarUsuarioPorUser(request.getUser());
-        usuario.setBaneado(true);
-        usuario.setInicioSuspension(LocalDateTime.now());
-        usuario.setFinSuspension(request.getFinSuspension());
-        return guardarCambios(usuario);
-    }
-
-    public Usuario banearUsuario(BanUserRequest request){
-        Usuario usuario = encontrarUsuarioPorUser(request.getUser());
-        usuario.setBaneado(true);
-        return guardarCambios(usuario);
-    }
-
-    public Usuario desbanearUsuario(BanUserRequest request){
-        Usuario usuario = encontrarUsuarioPorUser(request.getUser());
-        usuario.setBaneado(false);
-        return guardarCambios(usuario);
-    }
+    public void guardarCambios(Usuario usuario){userRepository.saveAndFlush(usuario);}
 
     public UserSerializer retornarUsuario(Usuario usuario){
-        return new UserSerializer(usuario.getUser(), usuario.getEmail(), usuario.getNroPuntos());
+        return new UserSerializer(usuario.getUser(), usuario.getEmail());
     }
 }

@@ -1,15 +1,11 @@
 package com.learnsyc.appweb.services;
 
-import com.learnsyc.appweb.excepciones.ResourceAlreadyExistsException;
 import com.learnsyc.appweb.excepciones.ResourceNotExistsException;
 import com.learnsyc.appweb.models.Hilo;
 import com.learnsyc.appweb.models.Topico;
-import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.repositories.HiloRepository;
 import com.learnsyc.appweb.serializers.hilos.DeleteHiloRequest;
 import com.learnsyc.appweb.serializers.hilos.HiloSerializer;
-import com.learnsyc.appweb.serializers.hilos.MoveHiloRequest;
-import com.learnsyc.appweb.serializers.hilos.SaveHiloRequest;
 import com.learnsyc.appweb.serializers.usuario.UserSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,24 +41,16 @@ public class HiloService {
         return hilo;
     }
 
-    public Hilo guardarCambios(Hilo hilo){return hiloRepository.saveAndFlush(hilo);}
+    private void guardarCambios(Hilo hilo){hiloRepository.saveAndFlush(hilo);}
 
     public HiloSerializer retornarHilo(Hilo hilo){
-        return new HiloSerializer(hilo.getIdHilo(), hilo.getTitulo(), hilo.getMensaje(), hilo.isCerrado(), hilo.getFechaCreacion(),
-                topicoService.retornarTopico(hilo.getTopico()), new UserSerializer(hilo.getUsuario().getUser(), hilo.getUsuario().getEmail(), hilo.getUsuario().getNroPuntos()));
+        return new HiloSerializer(hilo.getIdHilo(), hilo.getTitulo(), hilo.getMensaje(), hilo.getFechaCreacion(),
+                topicoService.retornarTopico(hilo.getTopico()), new UserSerializer(hilo.getUsuario().getUser(), hilo.getUsuario().getEmail()));
     }
 
-    public HiloSerializer cerrarHilo(DeleteHiloRequest request){
+    public HiloSerializer cerrarHilo(DeleteHiloRequest request){ //En duda si se eliminara
         Hilo hilo = encontrarHilo(request.getId());
         hilo.setCerrado(true);
-        guardarCambios(hilo);
-        return retornarHilo(hilo);
-    }
-
-    public HiloSerializer moverHilo(MoveHiloRequest request){
-        Hilo hilo = encontrarHilo(request.getId());
-        Topico topico = topicoService.buscarTopico(request.getNombreTopico());
-        hilo.setTopico(topico);
         guardarCambios(hilo);
         return retornarHilo(hilo);
     }

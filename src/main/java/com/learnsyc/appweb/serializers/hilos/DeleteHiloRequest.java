@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DeleteHiloRequest {
+public class DeleteHiloRequest { //Creo que se va
     @NotNull(message = "Dato vacio")
     Long id;
 }

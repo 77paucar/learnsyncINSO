@@ -22,7 +22,7 @@ public class Comentario {
     @Column(name="es_editado")
     boolean esEditado;
     @Lob
-    @Column(name = "archivo")
+    @Column(name = "archivo") //Si es criterio de aceptacion se queda
     byte[] archivo;
     @JoinColumns({
             @JoinColumn(name="id_hilo", referencedColumnName="id_hilo")

@@ -5,7 +5,6 @@ import com.learnsyc.appweb.models.Topico;
 import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.serializers.hilos.DeleteHiloRequest;
 import com.learnsyc.appweb.serializers.hilos.HiloSerializer;
-import com.learnsyc.appweb.serializers.hilos.MoveHiloRequest;
 import com.learnsyc.appweb.serializers.hilos.SaveHiloRequest;
 import com.learnsyc.appweb.services.HiloService;
 import com.learnsyc.appweb.services.TopicoService;

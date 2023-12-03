@@ -2,7 +2,6 @@ package com.learnsyc.appweb.controllers;
 
 import java.util.List;
 
-import com.learnsyc.appweb.serializers.categoria.DeleteCategoriaRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

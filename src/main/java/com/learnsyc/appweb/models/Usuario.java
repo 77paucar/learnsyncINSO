@@ -31,20 +31,8 @@ public class Usuario implements UserDetails {
     Role role;
     @Column(name="fecha_creacion", nullable = false)
     final LocalDate fechaCreacion = LocalDate.now();
-    @Column(name="inicio_suspension")
-    LocalDateTime inicioSuspension;
-    @Column(name="fin_suspension")
-    LocalDateTime finSuspension;
-    @Column(name="baneado")
-    boolean baneado;
-    @Column(name="nro_reportes")
-    int nroReportes;
-    @Column(name="nro_puntos")
-    int nroPuntos;
-
     @Column(name="enable")
     boolean enable;
-
     @Column(name="fecha_expiracion")
     LocalDateTime fechaExpiracion;
 
@@ -54,11 +42,6 @@ public class Usuario implements UserDetails {
         this.password = password;
         this.email = email;
         role = Role.STUDENT;
-        inicioSuspension = null;
-        finSuspension = null;
-        baneado = false;
-        nroReportes = 0;
-        nroPuntos = 0;
         enable = false;
         fechaExpiracion = null;
     }

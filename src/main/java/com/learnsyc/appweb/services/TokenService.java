@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class TokenService {
+public class TokenService { //En duda si eliminarlo debido a que se genera un token del jwt
 
     @Autowired
     ConfirmationTokenRepository confirmationTokenRepository;
