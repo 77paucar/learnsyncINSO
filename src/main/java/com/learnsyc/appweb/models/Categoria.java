@@ -14,9 +14,9 @@ public class Categoria {
     @GeneratedValue(strategy= GenerationType.AUTO) //Hace un autoincrement
     //Column hibernate name strategy googlear despues
     @Column(name="id_categorias") //Para que ubique a que columna agregar el valor
-    Long idCategorias;
+    private Long idCategorias;
     @Column(name="nombre")
-    String nombre;
+    private String nombre;
     @Column(name="descripcion")
-    String descripcion;
+    private String descripcion;
 }

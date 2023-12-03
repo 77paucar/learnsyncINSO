@@ -27,7 +27,7 @@ public class ConfirmationToken {
     })
 
     @ManyToOne
-    Usuario usuario;
+    private Usuario usuario;
 
     public ConfirmationToken(Long idToken, String token, Usuario usuario){
         this.idToken = idToken;

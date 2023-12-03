@@ -24,6 +24,7 @@ public class ComentarioService {
     ComentarioRepository comentarioRepository;
     @Autowired
     HiloService hiloService;
+    @Autowired UserService userService;
 
     public List<Comentario> listarComentario(){return comentarioRepository.findAll();}
 
@@ -59,6 +60,6 @@ public class ComentarioService {
 
     public ComentarioSerializer retornarComentario(Comentario comentario){
         return new ComentarioSerializer(comentario.getIdComentario(), comentario.getMensaje(), comentario.isEsEditado(), comentario.getFechaCreacion(), hiloService.retornarHilo(comentario.getHilo()),
-                new UserSerializer(comentario.getUsuario().getUser(), comentario.getUsuario().getEmail()));
+                userService.retornarUsuario(comentario.getUsuario()));
     }
 }

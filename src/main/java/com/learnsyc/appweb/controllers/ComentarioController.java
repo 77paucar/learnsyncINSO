@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("comentario")
-@CrossOrigin(origins = {"https://boisterous-sopapillas-1c3767.netlify.app"})
+@CrossOrigin(origins = "http://localhost:4200")
 public class ComentarioController {
     @Autowired ComentarioService comentarioService;
     @Autowired UserService userService;

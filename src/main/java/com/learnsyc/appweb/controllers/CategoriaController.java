@@ -12,7 +12,7 @@ import com.learnsyc.appweb.services.CategoriaService;
 
 @RestController
 @RequestMapping("categoria")
-@CrossOrigin(origins = "https://boisterous-sopapillas-1c3767.netlify.app")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CategoriaController {
 
     @Autowired CategoriaService categoriaService; 
@@ -26,10 +26,5 @@ public class CategoriaController {
     public Categoria crearCategoria(@Valid @RequestBody CategoriaSerializer request) {
         Categoria categoria = new Categoria(null, request.getNombre(), request.getDescripcion());
         return categoriaService.guardarCategoria(categoria);
-    }
-
-    @DeleteMapping("/")
-    public Categoria eliminarCategoria(@Valid @RequestBody DeleteCategoriaRequest request){
-        return categoriaService.eliminarCategoria(request);
     }
 }

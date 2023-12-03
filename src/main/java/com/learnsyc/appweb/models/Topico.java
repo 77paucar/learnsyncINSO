@@ -16,17 +16,17 @@ public class Topico {
     @Id //Identifica a la primary key
     @GeneratedValue(strategy= GenerationType.AUTO) //Hace un autoincrement
     @Column(name="id_topico") //Para que ubique a que columna agregar el valor
-    Long idTopico;
+    private Long idTopico;
     @Column(name="nombre")
-    String nombre;
+    private String nombre;
     @Column(name="descripcion")
-    String descripcion;
+    private String descripcion;
     @Column(name="fecha_creacion")
-    final LocalDate fechaCreacion = LocalDate.now();
+    private final LocalDate fechaCreacion = LocalDate.now();
     //Cambiar a guion bajo los name
     @JoinColumns({
         @JoinColumn(name="id_categorias", referencedColumnName="id_categorias")
     })
     @ManyToOne
-    Categoria categoria;
+    private Categoria categoria;
 }

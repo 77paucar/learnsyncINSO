@@ -14,27 +14,27 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id_comentario")
-    Long idComentario;
+    private Long idComentario;
     @Column(name="mensaje")
-    String mensaje;
+    private String mensaje;
     @Column(name="fecha_creacion")
-    final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
+    private final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
     @Column(name="es_editado")
-    boolean esEditado;
+    private boolean esEditado;
     @Lob
     @Column(name = "archivo") //Si es criterio de aceptacion se queda
-    byte[] archivo;
+    private byte[] archivo;
     @JoinColumns({
             @JoinColumn(name="id_hilo", referencedColumnName="id_hilo")
     })
     @ManyToOne
-    Hilo hilo;
+    private Hilo hilo;
 
     @JoinColumns({
             @JoinColumn(name="id_usuario", referencedColumnName="id_usuario")
     })
     @ManyToOne
-    Usuario usuario;
+    private Usuario usuario;
 
     public Comentario(Long idComentario, String mensaje, Hilo hilo, Usuario usuario, byte[] archivo){
         this.idComentario = idComentario;

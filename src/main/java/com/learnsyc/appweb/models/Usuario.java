@@ -20,21 +20,21 @@ public class Usuario implements UserDetails {
     @Id //Identifica a la primary key
     @GeneratedValue(strategy= GenerationType.AUTO) //Hace un autoincrement
     @Column(name="id_usuario") //Para que ubique a que columna agregar el valor
-    Long idUsuario;
+    private Long idUsuario;
     @Column(name="usuario", nullable = false)
-    String user;
+    private String user;
     @Column(name="password", nullable = false)
-    String password;
+    private String password;
     @Column(name="email", nullable = false)
-    String email;
+    private String email;
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
     @Column(name="fecha_creacion", nullable = false)
-    final LocalDate fechaCreacion = LocalDate.now();
+    private final LocalDate fechaCreacion = LocalDate.now();
     @Column(name="enable")
-    boolean enable;
+    private boolean enable;
     @Column(name="fecha_expiracion")
-    LocalDateTime fechaExpiracion;
+    private LocalDateTime fechaExpiracion;
 
     public Usuario(Long idUsuario, String user, String password, String email){
         this.idUsuario = idUsuario;

@@ -19,6 +19,7 @@ public class HiloService {
     HiloRepository hiloRepository;
     @Autowired
     TopicoService topicoService;
+    @Autowired UserService userService;
 
     public List<Hilo> listarHilo(){
         return hiloRepository.findAll();
@@ -45,13 +46,6 @@ public class HiloService {
 
     public HiloSerializer retornarHilo(Hilo hilo){
         return new HiloSerializer(hilo.getIdHilo(), hilo.getTitulo(), hilo.getMensaje(), hilo.getFechaCreacion(),
-                topicoService.retornarTopico(hilo.getTopico()), new UserSerializer(hilo.getUsuario().getUser(), hilo.getUsuario().getEmail()));
-    }
-
-    public HiloSerializer cerrarHilo(DeleteHiloRequest request){ //En duda si se eliminara
-        Hilo hilo = encontrarHilo(request.getId());
-        hilo.setCerrado(true);
-        guardarCambios(hilo);
-        return retornarHilo(hilo);
+                topicoService.retornarTopico(hilo.getTopico()), userService.retornarUsuario(hilo.getUsuario()));
     }
 }

@@ -13,35 +13,32 @@ public class Hilo {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id_hilo")
-    Long idHilo;
+    private Long idHilo;
     @Column(name="titulo")
-    String titulo;
+    private String titulo;
     @Column(name="mensaje")
-    String mensaje;
-    @Column(name="cerrado")
-    boolean cerrado; //Me parece que ya no va
+    private String mensaje;
     @Column(name="fecha_creacion")
-    final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
+    private final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
     @Lob
     @Column(name = "archivo")
-    byte[] archivo; //Si no es criterio de aceptacion se va
+    private byte[] archivo; //Si no es criterio de aceptacion se va
 
     @JoinColumns({
             @JoinColumn(name="id_topico", referencedColumnName="id_topico")
     })
     @ManyToOne
-    Topico topico;
+    private Topico topico;
 
     @JoinColumns({
             @JoinColumn(name="id_usuario", referencedColumnName="id_usuario")
     })
     @ManyToOne
-    Usuario usuario;
+    private Usuario usuario;
     public Hilo(Long idHilo, String titulo, String mensaje, Topico topico, Usuario usuario, byte[] archivo){
         this.idHilo = idHilo;
         this.titulo = titulo;
         this.mensaje = mensaje;
-        cerrado = false; //Posiblemente se va
         this.topico = topico;
         this.usuario = usuario;
         this.archivo = archivo;
