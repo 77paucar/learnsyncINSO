@@ -31,7 +31,7 @@ public class HiloController {
     public Hilo crearHilo(@Valid @RequestBody SaveHiloRequest request) {
         Usuario usuario = userService.encontrarUsuarioPorUser(request.getUsername());
         Topico topico = topicoService.buscarTopico(request.getTopicname());
-        Hilo hilo = new Hilo(null, request.getTitulo(), request.getMensaje(), topico, usuario, null);
+        Hilo hilo = new Hilo(null, request.getTitulo(), request.getMensaje(), topico, usuario);
         return hiloService.guardarHilo(hilo);
     }
     @DeleteMapping("/")

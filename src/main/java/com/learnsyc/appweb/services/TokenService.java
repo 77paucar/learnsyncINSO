@@ -4,20 +4,25 @@ import com.learnsyc.appweb.excepciones.ResourceNotExistsException;
 import com.learnsyc.appweb.models.ConfirmationToken;
 import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.repositories.ConfirmationTokenRepository;
+import com.learnsyc.appweb.serializers.usuario.AuthenticationUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class TokenService { //En duda si eliminarlo debido a que se genera un token del jwt
+public class TokenService {
 
     @Autowired
-    ConfirmationTokenRepository confirmationTokenRepository;
+    private ConfirmationTokenRepository confirmationTokenRepository;
+    @Autowired private EmailService emailService;
 
-    private void enviarEmail(String token) {
-        String url = "localhost:8080/user/confirmation-token?"+token;
-
+    public void enviarEmail(Usuario usuario) {
+        String token = generarToken(usuario);
+        String url = "http://localhost:8080/autenticacion/confirmation-token/"+token;
+        String mensaje = "Felicidades "+usuario.getUser()+" por registrar su cuenta, estas a un solo paso de poder hacer uso " +
+                "de las funciones de Learnsync, entra a este link para que puedas registrate," +url;
+        emailService.sendEmail(usuario.getEmail(), "Activacion de cuenta", mensaje);
     }
 
     public ConfirmationToken encontrarToken(String token){
@@ -27,10 +32,11 @@ public class TokenService { //En duda si eliminarlo debido a que se genera un to
         return confirmationTokenRepository.findByToken(token);
     }
 
-    public String generarToken(Usuario usuario){
+    public void guardarCambios(ConfirmationToken confirmationToken){confirmationTokenRepository.saveAndFlush(confirmationToken);}
+
+    private String generarToken(Usuario usuario){
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(null, token, usuario);
-        confirmationTokenRepository.save(confirmationToken);
-        return token;
+        return confirmationTokenRepository.save(confirmationToken).getToken();
     }
 }

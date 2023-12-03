@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor; 
 import lombok.AllArgsConstructor; 
 @Data
-@Table(name="categorias") //Da a entender que sera un modelo de base de datos
+@Table(name="categorias", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})}) //Da a entender que sera un modelo de base de datos
 @Entity //Da a entender que sera una entidad de base de datos
 @NoArgsConstructor //Genera constructor vacio
 @AllArgsConstructor
@@ -15,7 +15,7 @@ public class Categoria {
     //Column hibernate name strategy googlear despues
     @Column(name="id_categorias") //Para que ubique a que columna agregar el valor
     private Long idCategorias;
-    @Column(name="nombre")
+    @Column(name="nombre", nullable = false)
     private String nombre;
     @Column(name="descripcion")
     private String descripcion;

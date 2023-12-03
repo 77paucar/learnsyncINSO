@@ -1,15 +1,16 @@
 package com.learnsyc.appweb.controllers;
 
-import com.learnsyc.appweb.serializers.usuario.RecuperarContraRequest;
-import com.learnsyc.appweb.serializers.usuario.SaveUserRequest;
+import com.learnsyc.appweb.models.Usuario;
+import com.learnsyc.appweb.serializers.usuario.*;
+import com.learnsyc.appweb.services.TokenService;
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.learnsyc.appweb.services.AutenticacionServices;
-import com.learnsyc.appweb.serializers.usuario.AuthenticationUserRequest;
-import com.learnsyc.appweb.serializers.usuario.AuthenticationUserResponse;
 
 @RestController
 @RequestMapping("autenticacion")
@@ -18,17 +19,23 @@ public class AutenticacionController {
 
     @Autowired
     private AutenticacionServices autenticacionServices;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/register/")
-    public AuthenticationUserResponse crearUsuario(@Valid @RequestBody SaveUserRequest request) {
+    public UserSerializer crearUsuario(@Valid @RequestBody SaveUserRequest request) {
         return autenticacionServices.registrarUsuario(request);
     }
 
-    @PostMapping("/recuperar-contra/")
-    public String recuperarContraseña(@Valid @RequestBody RecuperarContraRequest request){
-        return autenticacionServices.recuperarContraseña(request);
+    @PostMapping("/register-admin/")
+    public UserSerializer registrarAdmin(@Valid @RequestBody SaveUserRequest request){
+        return autenticacionServices.registrarAdmin(request);
     }
 
+    @GetMapping("/confirmation-token/{token}")
+    public String activarCuenta(@PathVariable(name = "token") String token){
+        return autenticacionServices.ConfirmarCuenta(token);
+    }
     @PostMapping("/authentication/")
     public ResponseEntity<AuthenticationUserResponse> iniciarSesion(@Valid @RequestBody AuthenticationUserRequest request) throws Exception {
         return ResponseEntity.ok(autenticacionServices.autenticarUsuario(request));

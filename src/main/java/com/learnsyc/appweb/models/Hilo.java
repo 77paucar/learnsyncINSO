@@ -14,33 +14,28 @@ public class Hilo {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id_hilo")
     private Long idHilo;
-    @Column(name="titulo")
+    @Column(name="titulo", nullable = false)
     private String titulo;
     @Column(name="mensaje")
     private String mensaje;
-    @Column(name="fecha_creacion")
+    @Column(name="fecha_creacion", nullable = false)
     private final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
-    @Lob
-    @Column(name = "archivo")
-    private byte[] archivo; //Si no es criterio de aceptacion se va
-
     @JoinColumns({
-            @JoinColumn(name="id_topico", referencedColumnName="id_topico")
+            @JoinColumn(name="id_topico", referencedColumnName="id_topico", nullable = false)
     })
     @ManyToOne
     private Topico topico;
 
     @JoinColumns({
-            @JoinColumn(name="id_usuario", referencedColumnName="id_usuario")
+            @JoinColumn(name="id_usuario", referencedColumnName="id_usuario", nullable = false)
     })
     @ManyToOne
     private Usuario usuario;
-    public Hilo(Long idHilo, String titulo, String mensaje, Topico topico, Usuario usuario, byte[] archivo){
+    public Hilo(Long idHilo, String titulo, String mensaje, Topico topico, Usuario usuario){
         this.idHilo = idHilo;
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.topico = topico;
         this.usuario = usuario;
-        this.archivo = archivo;
     }
 }

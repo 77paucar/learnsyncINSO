@@ -32,7 +32,7 @@ public class ApplicationConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); //Duda si cambiar esto
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

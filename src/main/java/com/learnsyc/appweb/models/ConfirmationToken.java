@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@Table(name="confirmation_tokens")
+@Table(name="confirmation_tokens", uniqueConstraints = {@UniqueConstraint(columnNames = {"token"})})
 @Entity
 public class ConfirmationToken {
     @Id //Identifica a la primary key

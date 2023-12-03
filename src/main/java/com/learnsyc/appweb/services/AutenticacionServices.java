@@ -3,12 +3,10 @@ package com.learnsyc.appweb.services;
 import com.learnsyc.appweb.excepciones.EmailConfirmedException;
 import com.learnsyc.appweb.excepciones.ExpiredToken;
 import com.learnsyc.appweb.excepciones.ResourceAlreadyExistsException;
-import com.learnsyc.appweb.excepciones.ResourceNotExistsException;
+import com.learnsyc.appweb.excepciones.UserNotActivated;
 import com.learnsyc.appweb.models.ConfirmationToken;
-import com.learnsyc.appweb.repositories.ConfirmationTokenRepository;
 import com.learnsyc.appweb.repositories.UserRepository;
-import com.learnsyc.appweb.serializers.usuario.RecuperarContraRequest;
-import com.learnsyc.appweb.serializers.usuario.SaveUserRequest;
+import com.learnsyc.appweb.serializers.usuario.*;
 import com.learnsyc.appweb.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,14 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-import com.learnsyc.appweb.serializers.usuario.AuthenticationUserRequest;
-import com.learnsyc.appweb.serializers.usuario.AuthenticationUserResponse;
 import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.util.EncryptionUtil;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AutenticacionServices {
@@ -33,19 +28,19 @@ public class AutenticacionServices {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+    @Autowired private EmailService emailService;
+
+    @Autowired private TokenService tokenService;
+
+    @Autowired private UserService userService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired EmailService emailService;
+    private PasswordEncoder passwordEncoder;
 
-    @Autowired TokenService tokenService;
-
-    @Autowired UserService userService;
-
-    public AuthenticationUserResponse registrarUsuario(SaveUserRequest request) {
+    public UserSerializer registrarUsuario(SaveUserRequest request) {
         Usuario usuario = new Usuario(null, request.getUser(), passwordEncoder.encode(request.getPassword()), request.getEmail());
         if(userRepository.existsUsuarioByUser(usuario.getUser())){
             throw new ResourceAlreadyExistsException("El usuario "+usuario.getUser()+" existe");
@@ -53,12 +48,27 @@ public class AutenticacionServices {
         if(userRepository.existsUsuarioByEmail(usuario.getEmail())){
             throw new ResourceAlreadyExistsException("El email ya ha sido usado para la creación de otro usuario");
         }
-        usuario.setEnable(true);
+        usuario.setRole(Role.ADMIN);
         userRepository.save(usuario);
-        return new AuthenticationUserResponse(EncryptionUtil.encrypt(jwtTokenUtil.generateToken(usuario)));
+        tokenService.enviarEmail(usuario);
+        return userService.retornarUsuario(usuario);
     }
 
-    public void ConfirmarCuenta(String token){
+    public UserSerializer registrarAdmin(SaveUserRequest request) {
+        Usuario usuario = new Usuario(null, request.getUser(), passwordEncoder.encode(request.getPassword()), request.getEmail());
+        if(userRepository.existsUsuarioByUser(usuario.getUser())){
+            throw new ResourceAlreadyExistsException("El usuario "+usuario.getUser()+" existe");
+        }
+        if(userRepository.existsUsuarioByEmail(usuario.getEmail())){
+            throw new ResourceAlreadyExistsException("El email ya ha sido usado para la creación de otro usuario");
+        }
+        userRepository.save(usuario);
+        tokenService.enviarEmail(usuario);
+        return userService.retornarUsuario(usuario);
+    }
+
+
+    public String ConfirmarCuenta(String token){
         ConfirmationToken confirmationToken = tokenService.encontrarToken(token);
         if(confirmationToken.getFechaActivacion() != null){
             throw new EmailConfirmedException("Este email ya ha sido confirmado");
@@ -68,27 +78,25 @@ public class AutenticacionServices {
             throw new ExpiredToken("Token expirado");
         }
         confirmationToken.setFechaActivacion(LocalDateTime.now());
+        tokenService.guardarCambios(confirmationToken);
         Usuario usuario = confirmationToken.getUsuario();
         usuario.setEnable(true);
         userService.guardarCambios(usuario);
-    }
-
-    public String recuperarContraseña(RecuperarContraRequest request){
-        Usuario usuario = userService.encontrarUsuarioPorEmail(request.getEmail());
-        String mensaje = "Hola "+usuario.getUser()+"\nTú has solicitado la recuperación de tu contraseña y Learnsync se encarga de ayudar a sus usuarios en problemas como este." +
-                "\nSu contraseña es "+usuario.getPassword()+", ahora podrá autenticarse en Learnsync para hacer uso de sus funcionalidades.";
-        emailService.sendEmail(request.getEmail(), "Recuperar contraseña", mensaje);
-        return "Correo enviado, revise su bandeja de entrada";
+        return "<h1>Muchas gracias por activar su cuenta</h1>";
     }
 
     public AuthenticationUserResponse autenticarUsuario(AuthenticationUserRequest request) throws Exception {
         Optional<Usuario> usuario = userRepository.findByUser(request.getUser());
         if(usuario.isPresent()){
-            try{
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
-                return new AuthenticationUserResponse(EncryptionUtil.encrypt(jwtTokenUtil.generateToken(usuario.get())));
-            }catch (AuthenticationException e){
-                //pass to the throw.
+            if(usuario.get().isEnable()){
+                try{
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
+                    return new AuthenticationUserResponse(EncryptionUtil.encrypt(jwtTokenUtil.generateToken(usuario.get())));
+                }catch (AuthenticationException e){
+                    //pass to the throw.
+                }
+            }else {
+                throw new UserNotActivated("Cuenta no activada");
             }
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario y/o password incorrectos");
