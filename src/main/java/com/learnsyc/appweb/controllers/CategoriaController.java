@@ -12,7 +12,7 @@ import com.learnsyc.appweb.services.CategoriaService;
 
 @RestController
 @RequestMapping("categoria")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
 public class CategoriaController {
 
     @Autowired CategoriaService categoriaService; 

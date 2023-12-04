@@ -96,7 +96,7 @@ public class AutenticacionServices {
                 "                ACTIVACIÓN DE CUENTA</h3>\n" +
                 "              <p style=\"text-align: center; font-size: 18px; color: #000;\">Se activó la cuenta correctamente.</p>\n" +
                 "              <div style=\"text-align: center; margin-top: 30px;\">\n" +
-                "                <a href=\"http://localhost:4200/login\"\n" +
+                "                <a href=\"https://velvety-dusk-4569ef.netlify.app/login\"\n" +
                 "                  style=\"display: inline-block; padding: 12px 24px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;\">\n" +
                 "                  Iniciar sesión\n" +
                 "                </a>\n" +
