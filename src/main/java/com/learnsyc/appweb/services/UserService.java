@@ -52,6 +52,6 @@ public class UserService {
     public void guardarCambios(Usuario usuario){userRepository.saveAndFlush(usuario);}
 
     public UserSerializer retornarUsuario(Usuario usuario){
-        return new UserSerializer(usuario.getUser(), usuario.getEmail());
+        return new UserSerializer(usuario.getUser(), usuario.getEmail(), usuario.getRole());
     }
 }
