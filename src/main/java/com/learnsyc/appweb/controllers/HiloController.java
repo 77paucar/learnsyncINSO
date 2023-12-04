@@ -33,10 +33,6 @@ public class HiloController {
         Hilo hilo = new Hilo(null, request.getTitulo(), request.getMensaje(), topico, usuario);
         return hiloService.guardarHilo(hilo);
     }
-    @DeleteMapping("/")
-    public Hilo eliminarHilo(@Valid @RequestBody DeleteHiloRequest request){
-        return hiloService.eliminarHilo(request);
-    }
     @PostMapping("/encontrar/")
     public HiloSerializer encontrarHilo(@Valid @RequestBody Long id) { //En duda de por que hasta aca xd
         Hilo hilo = hiloService.encontrarHilo(id);
