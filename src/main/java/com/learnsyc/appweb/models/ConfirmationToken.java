@@ -18,7 +18,7 @@ public class ConfirmationToken {
     @Column(name="token")
     private String token;
     @Column(name="fecha_expiracion")
-    private final LocalDateTime fechaExpiracion = LocalDateTime.now().plusMinutes(1);
+    private final LocalDateTime fechaExpiracion = LocalDateTime.now().plusMinutes(10);
     @Column(name="fecha_activacion")
     private LocalDateTime fechaActivacion;
 
