@@ -1,13 +1,10 @@
 package com.learnsyc.appweb.controllers;
 
-import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.serializers.usuario.*;
 import com.learnsyc.appweb.services.TokenService;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.learnsyc.appweb.services.AutenticacionServices;
