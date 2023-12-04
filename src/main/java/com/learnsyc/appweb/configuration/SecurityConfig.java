@@ -41,7 +41,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         logger.debug("SecurityConfig initialized.");
         // We don't need CSRF for this example
-        httpSecurity.cors(AbstractHttpConfigurer::disable);
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 // don't authenticate this particular request
                 // all other requests need to be authenticated
