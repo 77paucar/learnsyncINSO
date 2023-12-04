@@ -14,7 +14,7 @@ import com.learnsyc.appweb.repositories.CategoriaRepository;
 public class CategoriaService {
     
     @Autowired
-    CategoriaRepository categoriaRepository;
+    private CategoriaRepository categoriaRepository;
 
     public List<Categoria> listarCategorias(){
         return categoriaRepository.findAll();

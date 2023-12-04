@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class ComentarioSerializer {
     Long id;
     String mensaje;
-    boolean esEditado;
     LocalDate fechaCreacion;
     HiloSerializer hiloSerializer;
     UserSerializer userSerializer;

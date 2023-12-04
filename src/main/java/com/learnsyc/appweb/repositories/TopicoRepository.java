@@ -9,10 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TopicoRepository extends JpaRepository<Topico, Long>{
-    Topico findByNombre(String nombre);
-    Topico saveAndFlush(Topico topico);
-
-    void deleteById(Long Id);
 
     boolean existsTopicoByNombre(String nombre);
 

@@ -2,11 +2,8 @@ package com.learnsyc.appweb.services;
 
 import com.learnsyc.appweb.excepciones.ResourceNotExistsException;
 import com.learnsyc.appweb.models.Hilo;
-import com.learnsyc.appweb.models.Topico;
 import com.learnsyc.appweb.repositories.HiloRepository;
-import com.learnsyc.appweb.serializers.hilos.DeleteHiloRequest;
 import com.learnsyc.appweb.serializers.hilos.HiloSerializer;
-import com.learnsyc.appweb.serializers.usuario.UserSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +32,6 @@ public class HiloService {
         }
         return hiloRepository.findByIdHilo(id);
     }
-
-    public Hilo eliminarHilo(DeleteHiloRequest request){
-        Hilo hilo = encontrarHilo(request.getId());
-        hiloRepository.deleteById(request.getId());
-        return hilo;
-    }
-
-    private void guardarCambios(Hilo hilo){hiloRepository.saveAndFlush(hilo);}
 
     public HiloSerializer retornarHilo(Hilo hilo){
         return new HiloSerializer(hilo.getIdHilo(), hilo.getTitulo(), hilo.getMensaje(), hilo.getFechaCreacion(),

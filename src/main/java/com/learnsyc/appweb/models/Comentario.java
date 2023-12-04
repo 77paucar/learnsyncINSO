@@ -19,8 +19,6 @@ public class Comentario {
     private String mensaje;
     @Column(name="fecha_creacion", nullable = false)
     private final LocalDate fechaCreacion = LocalDate.now(); //Cambiar a LocalDateTime
-    @Column(name="es_editado")
-    private boolean esEditado;
     @JoinColumns({
             @JoinColumn(name="id_hilo", referencedColumnName="id_hilo", nullable = false)
     })
@@ -36,7 +34,6 @@ public class Comentario {
     public Comentario(Long idComentario, String mensaje, Hilo hilo, Usuario usuario){
         this.idComentario = idComentario;
         this.mensaje = mensaje;
-        esEditado = false;
         this.hilo = hilo;
         this.usuario = usuario;
     }

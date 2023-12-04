@@ -27,9 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
-
-
+    private UserRepository userRepository;
 
     public List<Usuario> listarUsuarios() {
         return userRepository.findAll();
