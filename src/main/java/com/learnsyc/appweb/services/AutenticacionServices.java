@@ -83,7 +83,30 @@ public class AutenticacionServices {
         Usuario usuario = confirmationToken.getUsuario();
         usuario.setEnable(true);
         userService.guardarCambios(usuario);
-        return "<h1>Muchas gracias por activar su cuenta</h1>";
+        return " <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\">\n" +
+                "    <tr>\n" +
+                "      <td style=\"text-align: center; padding: 50px 0;\">\n" +
+                "        <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"600\"\n" +
+                "          style=\"background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);\">\n" +
+                "          <tr>\n" +
+                "            <td style=\"padding: 40px;\">\n" +
+                "              <h6 style=\"text-align: center; font-size: 18px; color: #000; text-transform: uppercase; font-weight: bold; font-family: 'Roboto Mono', monospace;\">\n" +
+                "                LEARNSYNC</h6>\n" +
+                "              <h3 style=\"text-align: center; font-size: 24px; color: #007bff; font-weight: bold; font-family: 'Roboto', sans-serif;\">\n" +
+                "                ACTIVACIÓN DE CUENTA</h3>\n" +
+                "              <p style=\"text-align: center; font-size: 18px; color: #000;\">Se activó la cuenta correctamente.</p>\n" +
+                "              <div style=\"text-align: center; margin-top: 30px;\">\n" +
+                "                <a href=\"http://localhost:4200/login\"\n" +
+                "                  style=\"display: inline-block; padding: 12px 24px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;\">\n" +
+                "                  Iniciar sesión\n" +
+                "                </a>\n" +
+                "              </div>\n" +
+                "            </td>\n" +
+                "          </tr>\n" +
+                "        </table>\n" +
+                "      </td>\n" +
+                "    </tr>\n" +
+                "  </table>";
     }
 
     public AuthenticationUserResponse autenticarUsuario(AuthenticationUserRequest request) throws Exception {
@@ -92,7 +115,7 @@ public class AutenticacionServices {
             if(usuario.get().isEnable()){
                 try{
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
-                    return new AuthenticationUserResponse(EncryptionUtil.encrypt(jwtTokenUtil.generateToken(usuario.get())));
+                    return new AuthenticationUserResponse(jwtTokenUtil.generateToken(usuario.get()));
                 }catch (AuthenticationException e){
                     //pass to the throw.
                 }

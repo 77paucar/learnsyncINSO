@@ -3,7 +3,6 @@ package com.learnsyc.appweb.controllers;
 import com.learnsyc.appweb.models.Hilo;
 import com.learnsyc.appweb.models.Topico;
 import com.learnsyc.appweb.models.Usuario;
-import com.learnsyc.appweb.serializers.hilos.DeleteHiloRequest;
 import com.learnsyc.appweb.serializers.hilos.HiloSerializer;
 import com.learnsyc.appweb.serializers.hilos.SaveHiloRequest;
 import com.learnsyc.appweb.services.HiloService;

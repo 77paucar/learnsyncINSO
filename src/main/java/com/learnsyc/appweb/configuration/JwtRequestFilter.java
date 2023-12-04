@@ -21,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 
 import java.io.IOException;
+import java.net.http.HttpHeaders;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -35,15 +36,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String tokenFromRequest = request.getHeader("Authorization");
-
         String userName=null;
         String encryptedJwtToken=null;
         String jwtToken=null;
         logger.debug("Inside JwtRequestFilter--OncePerRequestFilter");
         // JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
         if (tokenFromRequest != null && tokenFromRequest.startsWith("Bearer ")) {
-            encryptedJwtToken = tokenFromRequest.substring(7);
-            jwtToken = EncryptionUtil.decrypt(encryptedJwtToken);
+            //encryptedJwtToken = tokenFromRequest.substring(7);
+            jwtToken = tokenFromRequest.substring(7);
+            //jwtToken = EncryptionUtil.decrypt(encryptedJwtToken);
             try {
                 userName = jwtTokenUtil.getUserNameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {

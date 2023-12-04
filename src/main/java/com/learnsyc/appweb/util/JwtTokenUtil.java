@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class JwtTokenUtil implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
     private static final long serialVersionUID = 7383112237L;
-    public static final int JWT_TOKEN_VALIDITY = 1000*24*60;         // 10 minutes
+    public static final int JWT_TOKEN_VALIDITY = 24*60;
 
     @Value("${jwt.secret}")
     public String secret;
@@ -30,7 +30,7 @@ public class JwtTokenUtil implements Serializable {
         // we can set extra info this claims hashmap and below defined getCustomParamFromToken to get it by passing Map key.
         Map<String, Object> claims = new HashMap<>();
 //        claims.put("sub-application", "inventory");
-        return doGenerateToken(claims, usuario.getUser());
+        return doGenerateToken(claims, usuario);
     }
 
     //while creating the token -
@@ -38,10 +38,10 @@ public class JwtTokenUtil implements Serializable {
     //2. Sign the JWT using the HS512 algorithm and secret key.
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setAudience("rajblowplast").setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(Map<String, Object> claims, Usuario usuario) {
+        return Jwts.builder().setClaims(claims).setSubject(usuario.getUser()).setAudience(usuario.getRole().toString()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() +  JWT_TOKEN_VALIDITY*1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){

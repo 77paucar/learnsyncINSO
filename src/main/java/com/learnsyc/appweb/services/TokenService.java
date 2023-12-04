@@ -19,7 +19,7 @@ public class TokenService {
 
     public void enviarEmail(Usuario usuario) {
         String token = generarToken(usuario);
-        String url = "http://localhost:8080/autenticacion/confirmation-token/"+token;
+        String url = "http://localhost:8080/autenticacion/confirmation-token/"+token; //modificar puerto
         String mensaje = "Felicidades "+usuario.getUser()+" por registrar su cuenta, estas a un solo paso de poder hacer uso " +
                 "de las funciones de Learnsync, entra a este link para que puedas registrate," +url;
         emailService.sendEmail(usuario.getEmail(), "Activacion de cuenta", mensaje);

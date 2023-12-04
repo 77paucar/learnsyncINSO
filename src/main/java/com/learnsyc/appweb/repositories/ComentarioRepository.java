@@ -9,9 +9,4 @@ import java.util.List;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
-    Comentario findByIdComentario(Long id);
-    Comentario saveAndFlush(Comentario comentario);
-
-    void deleteById(Long id);
-
 }

@@ -4,8 +4,6 @@ import com.learnsyc.appweb.models.Comentario;
 import com.learnsyc.appweb.models.Hilo;
 import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.serializers.comentario.ComentarioSerializer;
-import com.learnsyc.appweb.serializers.comentario.DeleteComentarioRequest;
-import com.learnsyc.appweb.serializers.comentario.EditComentarioRequest;
 import com.learnsyc.appweb.serializers.comentario.SaveComentarioRequest;
 import com.learnsyc.appweb.services.ComentarioService;
 import com.learnsyc.appweb.services.HiloService;
@@ -35,15 +33,5 @@ public class ComentarioController {
         Hilo hilo = hiloService.encontrarHilo(request.getIdHilo());
         Comentario comentario = new Comentario(null, request.getMensaje(), hilo, usuario);
         return comentarioService.guardarComentario(comentario);
-    }
-
-    @PutMapping("/")
-    public ComentarioSerializer editarComentario(@Valid @RequestBody EditComentarioRequest request){
-        return comentarioService.editarComentario(request);
-    }
-
-    @DeleteMapping("/")
-    public Comentario eliminarComentario(@Valid @RequestBody DeleteComentarioRequest request){
-        return comentarioService.eliminarComentario(request);
     }
 }
