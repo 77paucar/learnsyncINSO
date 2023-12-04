@@ -13,7 +13,8 @@ public class CategoriaSerializer {
     @NotNull(message = "Dato no válido")
     @NotEmpty(message = "Dato vacio")
     @NotBlank(message = "No es valido un dato con solo espacio en blanco")
-    @Size(max = 20 , message = "Las categorias pueden tener un maximo de 20 caracteres")
+    @Size(max = 25 , message = "Las categorias tienen un maximo de 25 caracteres")
     String nombre;
+    @Size(max = 50 , message = "Las descripción tienen un maximo de 50 caracteres")
     String descripcion;
 }
