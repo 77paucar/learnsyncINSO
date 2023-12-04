@@ -48,7 +48,7 @@ public class AutenticacionServices {
         if(userRepository.existsUsuarioByEmail(usuario.getEmail())){
             throw new ResourceAlreadyExistsException("El email ya ha sido usado para la creación de otro usuario");
         }
-        usuario.setRole(Role.ADMIN);
+        usuario.setRole(Role.STUDENT);
         userRepository.save(usuario);
         tokenService.enviarEmail(usuario);
         return userService.retornarUsuario(usuario);
