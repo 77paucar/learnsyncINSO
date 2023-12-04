@@ -115,7 +115,7 @@ public class AutenticacionServices {
             if(usuario.get().isEnable()){
                 try{
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
-                    return new AuthenticationUserResponse(EncryptionUtil.encrypt(jwtTokenUtil.generateToken(usuario.get())));
+                    return new AuthenticationUserResponse(jwtTokenUtil.generateToken(usuario.get()));
                 }catch (AuthenticationException e){
                     //pass to the throw.
                 }
