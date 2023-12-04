@@ -14,7 +14,6 @@ import com.learnsyc.appweb.services.CategoriaService;
 @RequestMapping("categoria")
 @CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
 public class CategoriaController {
-
     @Autowired CategoriaService categoriaService; 
 
     @GetMapping("/listar/")
