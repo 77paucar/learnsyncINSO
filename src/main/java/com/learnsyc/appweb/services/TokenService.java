@@ -17,9 +17,9 @@ public class TokenService {
     private ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired private EmailService emailService;
 
-    public void enviarEmail(Usuario usuario) {
+    public void enviarEmail(Usuario usuario) { //Cambiar URL a la del back desplegado
         String token = generarToken(usuario);
-        String url = "https://learnsync.onrender.com/autenticacion/confirmation-token/"+token; //modificar puerto
+        String url = "https://localhost:8080/autenticacion/confirmation-token/"+token; //modificar puerto
         String mensaje = "Felicidades "+usuario.getUser()+" por registrar su cuenta, estas a un solo paso de poder hacer uso " +
                 "de las funciones de Learnsync, entra a este link para que puedas registrate," +url;
         emailService.sendEmail(usuario.getEmail(), "Activacion de cuenta", mensaje);

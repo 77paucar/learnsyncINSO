@@ -1,10 +1,8 @@
 package com.learnsyc.appweb.services;
 
-import com.learnsyc.appweb.excepciones.EmailConfirmedException;
-import com.learnsyc.appweb.excepciones.ExpiredToken;
-import com.learnsyc.appweb.excepciones.ResourceAlreadyExistsException;
-import com.learnsyc.appweb.excepciones.UserNotActivated;
+import com.learnsyc.appweb.excepciones.*;
 import com.learnsyc.appweb.models.ConfirmationToken;
+import com.learnsyc.appweb.repositories.ConfirmationTokenRepository;
 import com.learnsyc.appweb.repositories.UserRepository;
 import com.learnsyc.appweb.serializers.usuario.*;
 import com.learnsyc.appweb.util.JwtTokenUtil;
@@ -21,6 +19,7 @@ import com.learnsyc.appweb.util.EncryptionUtil;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AutenticacionServices {
@@ -39,6 +38,9 @@ public class AutenticacionServices {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
     public UserSerializer registrarUsuario(SaveUserRequest request) {
         Usuario usuario = new Usuario(null, request.getUser(), passwordEncoder.encode(request.getPassword()), request.getEmail());
@@ -124,5 +126,19 @@ public class AutenticacionServices {
             }
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario y/o password incorrectos");
+    }
+
+    public String recuperarContra(String email) {
+        if(!userRepository.existsUsuarioByEmail(email)){
+            throw new ResourceNotExistsException("No existe usuario ligado a ese correo");
+        }
+        Usuario usuario = userRepository.findByEmail(email);
+        String token = confirmationTokenRepository.findByUsuario(usuario).getToken();
+        String url = "http://localhost:4200/reset-password/"+token;
+        String mensaje = "Hola "+usuario.getUser()+" vemos que olvidaste tu contraseña y en Learnsync nos gusta la tranquilidad de nuestros usuarios." +
+                "Ingresa a este link para que reestablezcas tu contraseña y puedas seguir disfrutando las funcioens de Learnsync."
+                +"Link: "+url;
+        emailService.sendEmail(email, "Reestablecer contraseña", mensaje);
+        return "Correo enviado";
     }
 }

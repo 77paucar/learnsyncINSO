@@ -2,6 +2,7 @@ package com.learnsyc.appweb.controllers;
 
 import com.learnsyc.appweb.serializers.usuario.*;
 import com.learnsyc.appweb.services.TokenService;
+import com.learnsyc.appweb.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +12,14 @@ import com.learnsyc.appweb.services.AutenticacionServices;
 
 @RestController
 @RequestMapping("autenticacion")
-@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AutenticacionController {
 
     @Autowired
     private AutenticacionServices autenticacionServices;
     @Autowired
     private TokenService tokenService;
+    @Autowired private UserService userService;
 
     @PostMapping("/register/")
     public UserSerializer crearUsuario(@Valid @RequestBody SaveUserRequest request) {
@@ -36,5 +38,15 @@ public class AutenticacionController {
     @PostMapping("/authentication/")
     public ResponseEntity<AuthenticationUserResponse> iniciarSesion(@Valid @RequestBody AuthenticationUserRequest request) throws Exception {
         return ResponseEntity.ok(autenticacionServices.autenticarUsuario(request));
+    }
+
+    @PostMapping("/recuperar-contra/")
+    public String recuperarContra(@Valid @RequestBody String email){
+        return autenticacionServices.recuperarContra(email);
+    }
+
+    @PostMapping("/change-pass/{token}")
+    public UserSerializer changePass(@PathVariable(name = "token") String token, @Valid @RequestBody String password){
+        return userService.changePassword(password, token);
     }
 }

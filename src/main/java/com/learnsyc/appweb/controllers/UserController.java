@@ -12,7 +12,7 @@ import com.learnsyc.appweb.services.UserService;
 
 @RestController
 @RequestMapping("user")
-@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired UserService userService;
