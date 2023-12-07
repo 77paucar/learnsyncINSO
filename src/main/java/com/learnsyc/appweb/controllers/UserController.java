@@ -4,10 +4,7 @@ import java.util.List;
 
 import com.learnsyc.appweb.serializers.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.learnsyc.appweb.services.UserService;
 
 @RestController
@@ -22,5 +19,13 @@ public class UserController {
         return userService.listarUsuarios().stream().map((it) -> userService.retornarUsuario(it)).toList();
     }
 
-    //Analizar si juntar AutenticacionController con UserController
+    @PostMapping("/puntuar/")
+    public UserSerializer puntuar(PuntuarRequest request){
+        return userService.puntuar(request);
+    }
+
+    @PostMapping("/canjear")
+    public UserSerializer canjear(PuntuarRequest request){
+        return userService.canjear(request);
+    }
 }

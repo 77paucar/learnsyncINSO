@@ -33,6 +33,8 @@ public class Usuario implements UserDetails {
     private final LocalDate fechaCreacion = LocalDate.now();
     @Column(name="enable")
     private boolean enable;
+    @Column(name="nro_puntos")
+    int nroPuntos;
 
     public Usuario(Long idUsuario, String user, String password, String email){
         this.idUsuario = idUsuario;
@@ -41,6 +43,7 @@ public class Usuario implements UserDetails {
         this.email = email;
         role = Role.STUDENT;
         enable = false;
+        nroPuntos = 0;
     }
 
     @Override

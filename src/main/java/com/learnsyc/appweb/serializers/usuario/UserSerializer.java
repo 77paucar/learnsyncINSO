@@ -9,4 +9,5 @@ public class UserSerializer {
     String user;
     String email;
     Role role;
+    int nroPuntos;
 }

@@ -36,12 +36,26 @@ public class UserService {
     public void guardarCambios(Usuario usuario){userRepository.saveAndFlush(usuario);}
 
     public UserSerializer retornarUsuario(Usuario usuario){
-        return new UserSerializer(usuario.getUser(), usuario.getEmail(), usuario.getRole());
+        return new UserSerializer(usuario.getUser(), usuario.getEmail(), usuario.getRole(), usuario.getNroPuntos());
     }
 
     public UserSerializer changePassword(String password, String token) {
         Usuario usuario = confirmationTokenRepository.findByToken(token).getUsuario();
         usuario.setPassword(passwordEncoder.encode(password));
+        guardarCambios(usuario);
+        return retornarUsuario(usuario);
+    }
+
+    public UserSerializer puntuar(PuntuarRequest request) {
+        Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
+        usuario.setNroPuntos(usuario.getNroPuntos()+ request.getPuntos());
+        guardarCambios(usuario);
+        return retornarUsuario(usuario);
+    }
+
+    public UserSerializer canjear(PuntuarRequest request) {
+        Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
+        usuario.setNroPuntos(usuario.getNroPuntos()- request.getPuntos());
         guardarCambios(usuario);
         return retornarUsuario(usuario);
     }
