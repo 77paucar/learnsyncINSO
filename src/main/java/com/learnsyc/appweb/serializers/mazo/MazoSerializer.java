@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MazoSerializer {
-    private Long id;
-    private String titulo;
-    private String descripcion;
-    private String imagen;
-    private UserSerializer usuario;
+    Long id;
+    String titulo;
+    String descripcion;
+    String imagen;
+    UserSerializer usuario;
 }

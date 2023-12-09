@@ -4,6 +4,7 @@ import com.learnsyc.appweb.models.Mazo;
 import com.learnsyc.appweb.serializers.mazo.MazoSerializer;
 import com.learnsyc.appweb.serializers.mazo.SaveMazoRequest;
 import com.learnsyc.appweb.services.MazoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,8 @@ public class MazoController {
         return mazoService.listarMazos().stream().map((it)->mazoService.retornarMazo(it)).toList();
     }
 
-    @PostMapping("/crear/")
-    public Mazo crearMazo(SaveMazoRequest request){
+    @PostMapping("/")
+    public Mazo crearMazo(@Valid @RequestBody SaveMazoRequest request){
         return mazoService.crearMazo(request);
     }
 }
