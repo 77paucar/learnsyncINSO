@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Table(name = "premios")
+@Table(name = "premios", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})})
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,14 +23,8 @@ public class Premio {
     private String descripcion;
 
     @Column(name = "precio", nullable = false)
-    int precio;
+    private int precio;
 
     @Column(name = "imagen", columnDefinition = "text", nullable = false)
-    String imagen;
-
-    @JoinColumns({
-            @JoinColumn(name="id_usuario", referencedColumnName="id_usuario")
-    })
-    @ManyToOne
-    Usuario usuario;
+    private String imagen;
 }

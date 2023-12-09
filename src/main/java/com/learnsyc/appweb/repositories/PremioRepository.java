@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PremioRepository extends JpaRepository<Premio, Long> {
     Premio findByIdPremio(Long id);
+
+    Premio findByNombre(String nombre);
 }

@@ -18,8 +18,7 @@ public class AutenticacionController {
     @Autowired
     private AutenticacionServices autenticacionServices;
     @Autowired
-    private TokenService tokenService;
-    @Autowired private UserService userService;
+    private UserService userService;
 
     @PostMapping("/register/")
     public UserSerializer crearUsuario(@Valid @RequestBody SaveUserRequest request) {

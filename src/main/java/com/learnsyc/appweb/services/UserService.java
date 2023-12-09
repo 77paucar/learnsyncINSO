@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.learnsyc.appweb.excepciones.*;
+import com.learnsyc.appweb.models.Canje;
+import com.learnsyc.appweb.models.Premio;
 import com.learnsyc.appweb.repositories.ConfirmationTokenRepository;
 import com.learnsyc.appweb.serializers.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.repositories.UserRepository;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Service
 public class UserService {
@@ -21,6 +22,7 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired private ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private PremioService premioService;
 
     public List<Usuario> listarUsuarios() {
         return userRepository.findAll();
@@ -46,17 +48,19 @@ public class UserService {
         return retornarUsuario(usuario);
     }
 
-    public UserSerializer puntuar(PuntuarRequest request) {
+    public Canje puntuar(PuntuarRequest request) {
         Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
+        Premio premio = premioService.encontrarPremio(request.getNombre());
         usuario.setNroPuntos(usuario.getNroPuntos()+ request.getPuntos());
         guardarCambios(usuario);
-        return retornarUsuario(usuario);
+        return new Canje(usuario, premio, request.getPuntos());
     }
 
-    public UserSerializer canjear(PuntuarRequest request) {
+    public Canje canjear(PuntuarRequest request) {
         Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
-        usuario.setNroPuntos(usuario.getNroPuntos()- request.getPuntos());
+        Premio premio = premioService.encontrarPremio(request.getNombre());
+        usuario.setNroPuntos(usuario.getNroPuntos() - request.getPuntos());
         guardarCambios(usuario);
-        return retornarUsuario(usuario);
+        return new Canje(usuario, premio, request.getPuntos());
     }
 }

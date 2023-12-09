@@ -2,6 +2,7 @@ package com.learnsyc.appweb.controllers;
 
 import java.util.List;
 
+import com.learnsyc.appweb.models.Canje;
 import com.learnsyc.appweb.serializers.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class UserController {
     }
 
     @PostMapping("/puntuar/")
-    public UserSerializer puntuar(PuntuarRequest request){
+    public Canje puntuar(PuntuarRequest request){
         return userService.puntuar(request);
     }
 
     @PostMapping("/canjear")
-    public UserSerializer canjear(PuntuarRequest request){
+    public Canje canjear(PuntuarRequest request){
         return userService.canjear(request);
     }
 }

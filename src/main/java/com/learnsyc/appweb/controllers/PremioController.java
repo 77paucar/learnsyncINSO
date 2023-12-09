@@ -1,9 +1,7 @@
 package com.learnsyc.appweb.controllers;
 
 import com.learnsyc.appweb.models.Premio;
-import com.learnsyc.appweb.models.Usuario;
 import com.learnsyc.appweb.serializers.premio.PremioSerializer;
-import com.learnsyc.appweb.serializers.premio.SavePremioRequest;
 import com.learnsyc.appweb.services.PremioService;
 import com.learnsyc.appweb.services.UserService;
 import jakarta.validation.Valid;
@@ -27,9 +25,8 @@ public class PremioController {
     }
 
     @PostMapping("/")
-    public Premio subirPremio(@Valid @RequestBody SavePremioRequest request){
-        Usuario usuario = userService.encontrarUsuarioPorUser(request.getUsername());
-        Premio premio = new Premio(null, request.getNombre(), request.getDescripcion(), request.getPrecio(), request.getImagen(), usuario);
+    public Premio subirPremio(@Valid @RequestBody PremioSerializer request){
+        Premio premio = new Premio(null, request.getNombre(), request.getDescripcion(), request.getPrecio(), request.getImagen());
         return premioService.crearPremio(premio);
     }
 }

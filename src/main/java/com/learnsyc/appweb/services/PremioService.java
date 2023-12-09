@@ -12,8 +12,6 @@ import java.util.List;
 public class PremioService {
     @Autowired
     private PremioRepository premioRepository;
-    @Autowired
-    private UserService userService;
 
     public List<Premio> listarPremios() {
         return premioRepository.findAll();
@@ -27,7 +25,7 @@ public class PremioService {
         return new PremioSerializer(premio.getNombre(), premio.getDescripcion(), premio.getPrecio(), premio.getImagen());
     }
 
-    private Premio encontrarPremio(Long id) {
-        return premioRepository.findByIdPremio(id);
+    public Premio encontrarPremio(String nombre) {
+        return premioRepository.findByNombre(nombre);
     }
 }

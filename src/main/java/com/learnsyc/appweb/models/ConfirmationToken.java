@@ -26,7 +26,7 @@ public class ConfirmationToken {
             @JoinColumn(name="id_usuario", referencedColumnName = "id_usuario")
     })
 
-    @ManyToOne
+    @OneToOne
     private Usuario usuario;
 
     public ConfirmationToken(Long idToken, String token, Usuario usuario){
