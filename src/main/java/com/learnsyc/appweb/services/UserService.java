@@ -6,7 +6,9 @@ import java.util.Optional;
 import com.learnsyc.appweb.excepciones.*;
 import com.learnsyc.appweb.models.Canje;
 import com.learnsyc.appweb.models.Premio;
+import com.learnsyc.appweb.repositories.CanjeoRepository;
 import com.learnsyc.appweb.repositories.ConfirmationTokenRepository;
+import com.learnsyc.appweb.serializers.canje.CanjeoResponse;
 import com.learnsyc.appweb.serializers.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +25,7 @@ public class UserService {
     @Autowired private ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private PremioService premioService;
+    @Autowired private CanjeoRepository canjeoRepository;
 
     public List<Usuario> listarUsuarios() {
         return userRepository.findAll();
@@ -48,19 +51,25 @@ public class UserService {
         return retornarUsuario(usuario);
     }
 
-    public Canje puntuar(PuntuarRequest request) {
+    public CanjeoResponse puntuar(PuntuarRequest request) {
         Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
         Premio premio = premioService.encontrarPremio(request.getNombre());
         usuario.setNroPuntos(usuario.getNroPuntos()+ request.getPuntos());
         guardarCambios(usuario);
-        return new Canje(usuario, premio, request.getPuntos());
+        canjeoRepository.save(new Canje(usuario, premio, request.getPuntos()));
+        return new CanjeoResponse("Comentario puntuado");
     }
 
-    public Canje canjear(PuntuarRequest request) {
+    public CanjeoResponse canjear(PuntuarRequest request) {
         Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
         Premio premio = premioService.encontrarPremio(request.getNombre());
-        usuario.setNroPuntos(usuario.getNroPuntos() - request.getPuntos());
+        try{
+            usuario.setNroPuntos(usuario.getNroPuntos() - request.getPuntos());
+        }catch (RuntimeException e){
+            throw new RuntimeException("Puntaje insuficiente");
+        }
         guardarCambios(usuario);
-        return new Canje(usuario, premio, request.getPuntos());
+        canjeoRepository.save(new Canje(usuario, premio, request.getPuntos()));
+        return new CanjeoResponse("Canjeo efectuado");
     }
 }
