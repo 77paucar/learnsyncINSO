@@ -51,12 +51,10 @@ public class UserService {
         return retornarUsuario(usuario);
     }
 
-    public CanjeoResponse puntuar(PuntuarRequest request) {
+    public CanjeoResponse puntuar(PuntosRequest request) {
         Usuario usuario = encontrarUsuarioPorUser(request.getUsername());
-        Premio premio = premioService.encontrarPremio(request.getNombre());
         usuario.setNroPuntos(usuario.getNroPuntos()+ request.getPuntos());
         guardarCambios(usuario);
-        canjeoRepository.save(new Canje(usuario, premio, request.getPuntos()));
         return new CanjeoResponse("Comentario puntuado");
     }
 
