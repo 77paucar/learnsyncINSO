@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("premio")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
 public class PremioController {
     @Autowired
     private PremioService premioService;

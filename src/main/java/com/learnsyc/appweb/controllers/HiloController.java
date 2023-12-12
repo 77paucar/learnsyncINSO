@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("hilo")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
 public class HiloController {
     @Autowired HiloService hiloService;
     @Autowired UserService userService;

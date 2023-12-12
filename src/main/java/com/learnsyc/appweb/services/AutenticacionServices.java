@@ -134,7 +134,7 @@ public class AutenticacionServices {
         }
         Usuario usuario = userRepository.findByEmail(email);
         String token = confirmationTokenRepository.findByUsuario(usuario).getToken();
-        String url = "http://localhost:4200/reset-password/"+token;
+        String url = "https://velvety-dusk-4569ef.netlify.app/reset-password/"+token;
         String mensaje = "Hola "+usuario.getUser()+" vemos que olvidaste tu contraseña y en Learnsync nos gusta la tranquilidad de nuestros usuarios." +
                 "Ingresa a este link para que reestablezcas tu contraseña y puedas seguir disfrutando las funcioens de Learnsync."
                 +"Link: "+url;

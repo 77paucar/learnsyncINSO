@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("mazo")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://velvety-dusk-4569ef.netlify.app")
 public class MazoController {
     @Autowired
     MazoService mazoService;
