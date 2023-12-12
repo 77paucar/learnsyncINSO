@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/puntuar/")
-    public CanjeoResponse puntuar(@Valid @RequestBody PuntuarRequest request){
+    public CanjeoResponse puntuar(@Valid @RequestBody PuntosRequest request){
         return userService.puntuar(request);
     }
 
