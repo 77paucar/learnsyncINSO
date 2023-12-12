@@ -3,7 +3,9 @@ package com.learnsyc.appweb.controllers;
 import java.util.List;
 
 import com.learnsyc.appweb.models.Canje;
+import com.learnsyc.appweb.serializers.canje.CanjeoResponse;
 import com.learnsyc.appweb.serializers.usuario.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.learnsyc.appweb.services.UserService;
@@ -21,12 +23,12 @@ public class UserController {
     }
 
     @PostMapping("/puntuar/")
-    public Canje puntuar(PuntuarRequest request){
+    public CanjeoResponse puntuar(@Valid @RequestBody PuntuarRequest request){
         return userService.puntuar(request);
     }
 
     @PostMapping("/canjear")
-    public Canje canjear(PuntuarRequest request){
+    public CanjeoResponse canjear(@Valid @RequestBody PuntuarRequest request){
         return userService.canjear(request);
     }
 }
