@@ -128,7 +128,7 @@ public class AutenticacionServices {
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario y/o password incorrectos");
     }
 
-    public String recuperarContra(String email) {
+    public RecuperarContraResponse recuperarContra(String email) {
         if(!userRepository.existsUsuarioByEmail(email)){
             throw new ResourceNotExistsException("No existe usuario ligado a ese correo");
         }
@@ -139,6 +139,6 @@ public class AutenticacionServices {
                 "Ingresa a este link para que reestablezcas tu contraseña y puedas seguir disfrutando las funcioens de Learnsync."
                 +"Link: "+url;
         emailService.sendEmail(email, "Reestablecer contraseña", mensaje);
-        return "Correo enviado";
+        return new RecuperarContraResponse("Correo enviado");
     }
 }

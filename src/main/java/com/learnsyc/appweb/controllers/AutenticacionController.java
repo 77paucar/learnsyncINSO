@@ -40,7 +40,7 @@ public class AutenticacionController {
     }
 
     @PostMapping("/recuperar-contra/")
-    public String recuperarContra(@Valid @RequestBody String email){
+    public RecuperarContraResponse recuperarContra(@Valid @RequestBody String email){
         return autenticacionServices.recuperarContra(email);
     }
 
